@@ -2,10 +2,8 @@
 include:
   - splunkforwarder.user
 
-
 /opt/splunkforwarder/etc:
-  file:
-    - directory
+  file.directory:
     - user: splunk
     - group: splunk
     - mode: 755
@@ -14,8 +12,7 @@ include:
       - user: splunk
 
 /opt/splunkforwarder/etc/certs:
-  file:
-    - directory
+  file.directory:
     - user: splunk
     - group: splunk
     - mode: 500
@@ -26,8 +23,7 @@ include:
 {% for filename, config in salt['pillar.get']('splunk:certs', {}).iteritems() %}
 
 /opt/splunkforwarder/etc/certs/{{ filename }}:
-  file:
-    - managed
+  file.managed:
     - user: splunk
     - group: splunk
     - mode: {{ config.get('mode', 400) }}

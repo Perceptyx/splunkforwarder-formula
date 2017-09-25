@@ -6,16 +6,14 @@ include:
 
 
 /opt/splunkforwarder/etc/apps/search/local:
-  file:
-    - directory
+  file.directory:
     - user: splunk
     - group: splunk
     - mode: 755
     - makedirs: True
 
 /opt/splunkforwarder/etc/apps/search/local/inputs.conf:
-  file:
-    - managed
+  file.managed:
     - name: /opt/splunkforwarder/etc/apps/search/local/inputs.conf
     - source: salt://splunkforwarder/etc-apps-search/local/inputs.conf
     - template: jinja
@@ -34,8 +32,7 @@ include:
       - service: splunkforwarder
 
 /opt/splunkforwarder/etc/system/local/outputs.conf:
-  file:
-    - managed
+  file.managed:
     - name: /opt/splunkforwarder/etc/system/local/outputs.conf
     - source: salt://splunkforwarder/etc-system-local/outputs.conf
     - template: jinja

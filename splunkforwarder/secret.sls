@@ -3,16 +3,14 @@ include:
   - splunkforwarder.forwarder
 
 /opt/splunkforwarder/etc/auth:
-  file:
-    - directory
+  file.directory:
     - user: splunk
     - group: splunk
     - mode: 700
     - makedirs: True
 
 /opt/splunkforwarder/etc/auth/splunk.secret:
-  file:
-    - managed
+  file.directory:
     - user: splunk
     - group: splunk
     - mode: 400
