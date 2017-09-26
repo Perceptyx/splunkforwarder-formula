@@ -40,13 +40,24 @@ splunkforwarder:
     - require_in:
       - service: splunkforwarder
   {%- if grains['os_family'] == 'Debian' %}
+  {# Use sysvinit script or systemd based on the following check #}
+  {%- if salt['cmd.retcode']('command -v systemctl 2&>1 /dev/null', python_shell=True) == 1 %}
   file.managed:
     - name: /etc/init.d/splunkforwarder
     - source: salt://splunkforwarder/init.d/splunkforwarder.sh
     - template: jinja
-    - mode: 500
+    - mode: 755
     - require_in:
       - service: splunkforwarder
+  {% else %}
+  file.managed:
+    - name: /etc/systemd/system/splunkforwarder.service
+    - source: salt://splunkforwarder/init.d/splunkforwarder.service
+    - template: jinja
+    - mode: 644
+    - require_in:
+      - service: splunkforwarder
+  {% endif %}
   cmd.watch:
     - cwd: /usr/local/src/
     - name: dpkg -i {{ package_filename }}
