@@ -25,6 +25,7 @@ splunkforwarder:
     - name: splunkforwarder
     - enable: True
     - restart: True
+    - init_delay: 10
     - require:
       - pkg: splunkforwarder
       - file: splunkforwarder
