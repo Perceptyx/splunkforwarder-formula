@@ -12,6 +12,13 @@ include:
     - mode: 755
     - makedirs: True
 
+/opt/splunkforwarder/etc/system/local:
+  file.directory:
+    - user: splunk
+    - group: splunk
+    - mode: 755
+    - makedirs: True
+
 /opt/splunkforwarder/etc/apps/search/local/inputs.conf:
   file.managed:
     - name: /opt/splunkforwarder/etc/apps/search/local/inputs.conf
@@ -43,4 +50,5 @@ include:
       self_cert: {{ self_cert }}
     - require:
       - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/system/local
       - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
