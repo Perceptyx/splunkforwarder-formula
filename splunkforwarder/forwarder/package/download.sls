@@ -41,7 +41,7 @@ splunkforwarder:
       - service: splunkforwarder
   {%- if grains['os_family'] == 'Debian' %}
   {# Use sysvinit script or systemd based on the following check #}
-  {%- if salt['cmd.retcode']('command -v systemctl 2&>1 /dev/null', python_shell=True) == 1 %}
+  {%- if salt['cmd.retcode']('command -v systemctl 2>&1 /dev/null', python_shell=True) == 1 %}
   file.managed:
     - name: /etc/init.d/splunkforwarder
     - source: salt://splunkforwarder/init.d/splunkforwarder.sh
