@@ -51,4 +51,18 @@ include:
     - require:
       - pkg: splunkforwarder
       - file: /opt/splunkforwarder/etc/system/local
+
+/opt/splunkforwarder/etc/system/local/user-seed.conf:
+  file.managed:
+    - name: /opt/splunkforwarder/etc/system/local/user-seed.conf
+    - source: salt://splunkforwarder/etc-system-local/user-seed.conf
+    - template: jinja
+    - user: splunk
+    - group: splunk
+    - mode: 600
+    - context:
+      self_cert: {{ self_cert }}
+    - require:
+      - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/system/local
       - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
