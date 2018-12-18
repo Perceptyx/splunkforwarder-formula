@@ -19,6 +19,9 @@ splunkforwarder:
 
 ### <-- end mutually exclusive
 
+  # It's recommended to disable port 8089 in forwarder
+  disable_management_port: True
+
   cert_filename: selfsignedcert.pem
   intermediate: True
   forward_servers:
