@@ -67,14 +67,18 @@ include:
       - file: /opt/splunkforwarder/etc/system/local
       - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
 
-{% if salt['pillar.get']('splunkforwarder:disable_management_port', False) %}
 /opt/splunkforwarder/etc/system/local/server.conf:
-  file.append:
-    - text: |
-
-        # - Disable Splunk Forwarder Management port (8089) - #
-        [httpServer]
-        disableDefaultPort = true
+  file.managed:
+    - name: /opt/splunkforwarder/etc/system/local/server.conf
+    - source: salt://splunkforwarder/etc-system-local/server.conf
+    - template: jinja
+    - user: splunk
+    - group: splunk
+    - mode: 600
+    - context:
+      self_cert: {{ self_cert }}
+    - require:
+      - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/system/local
     - onchanges_in:
       - service: splunkforwarder
-{% endif %}
