@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+Debian:
+  package_filename: splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-amd64.deb
+  download_base_url: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/
+  source_hash: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-amd64.deb.sha512
+
+RedHat:
+  package_filename: splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm
+  download_base_url: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/
+  source_hash: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm.sha512
+
+Suse:
+  package_filename: splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm
+  download_base_url: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/
+  source_hash: https://download.splunk.com/products/universalforwarder/releases/8.0.0/linux/splunkforwarder-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm.sha512
+
+FreeBSD:
+  package_filename: splunkforwarder-8.0.0-1357bef0a7f6-freebsd-11.1-amd64.txz
+  download_base_url: https://download.splunk.com/products/universalforwarder/releases/8.0.0/freebsd/
+  source_hash: https://download.splunk.com/products/universalforwarder/releases/8.0.0/splunkforwarder-8.0.0-1357bef0a7f6-freebsd-11.1-amd64.txz.sha512
