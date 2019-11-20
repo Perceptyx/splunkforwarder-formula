@@ -20,7 +20,9 @@ include:
     - require:
       - file: /opt/splunkforwarder/etc
 
-{% for filename, config in salt['pillar.get']('splunk:certs', {}).iteritems() %}
+{% if salt['pillar.get']('splunk:certs') is mapping %}
+
+{% for filename, config in salt['pillar.get']('splunk:certs', {}).items() %}
 
 /opt/splunkforwarder/etc/certs/{{ filename }}:
   file.managed:
@@ -38,3 +40,4 @@ include:
 
 {% endfor %}
 
+{% endif %}
