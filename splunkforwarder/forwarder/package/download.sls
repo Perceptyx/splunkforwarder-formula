@@ -1,6 +1,4 @@
-{%- set download_base_url = pillar['splunkforwarder']['download_base_url'] %}
-{%- set package_filename = pillar['splunkforwarder']['package_filename'] %}
-{%- set source_hash = pillar['splunkforwarder']['source_hash'] %}
+{% from 'splunkforwarder/map.jinja' import splunkforwarder with context %}
 
 include:
   - splunkforwarder.certs
@@ -9,9 +7,9 @@ include:
 
 get-splunkforwarder-package:
   file.managed:
-    - name: /usr/local/src/{{ package_filename }}
-    - source: {{ download_base_url }}{{ package_filename }}
-    - source_hash: {{ source_hash }}
+    - name: /usr/local/src/{{ splunkforwarder.package_filename }}
+    - source: {{ splunkforwarder.download_base_url }}{{ splunkforwarder.package_filename }}
+    - source_hash: {{ splunkforwarder.source_hash }}
     - makedirs: True
 
 {%- if grains['os_family'] == 'Debian' %}
@@ -20,7 +18,7 @@ is-splunkforwarder-package-outdated:
     - cwd: /usr/local/src
     - stateful: True
     - names:
-      - new=$(dpkg-deb --showformat='${Package} ${Version}\n' -W {{ package_filename }});
+      - new=$(dpkg-deb --showformat='${Package} ${Version}\n' -W {{ splunkforwarder.package_filename }});
         old=$(dpkg-query --showformat='${Package} ${Version}\n' -W splunkforwarder);
         if test "$new" != "$old";
           then echo; echo "changed=true comment='new($new) vs old($old)'";
@@ -33,7 +31,7 @@ is-splunkforwarder-package-outdated:
 splunkforwarder:
   pkg.installed:
     - sources:
-      - splunkforwarder: /usr/local/src/{{ package_filename }}
+      - splunkforwarder: /usr/local/src/{{ splunkforwarder.package_filename }}
     - require:
       - user: splunk_user
       - file: get-splunkforwarder-package
@@ -61,7 +59,7 @@ splunkforwarder:
   {% endif %}
   cmd.watch:
     - cwd: /usr/local/src/
-    - name: dpkg -i {{ package_filename }}
+    - name: dpkg -i {{ splunkforwarder.package_filename }}
     - watch:
       - cmd: is-splunkforwarder-package-outdated
     - require_in:

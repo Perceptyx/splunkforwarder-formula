@@ -1,3 +1,5 @@
+{% from 'splunkforwarder/map.jinja' import splunkforwarder with context %}
+
 include:
 {% if salt['pillar.get']('splunkforwarder:intermediate', False) %}
   - splunkforwarder.intermediate-forwarder
