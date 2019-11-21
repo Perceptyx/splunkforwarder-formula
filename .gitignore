@@ -1,2 +1,5 @@
 /.idea/
 .kitchen
+# Bundler
+Gemfile.lock
+
