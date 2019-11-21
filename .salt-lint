@@ -1,0 +1,10 @@
+---
+skip_list:
+  - 204
+tags:
+  - formatting
+verbosity: 0
+rules:
+  formatting:
+    ignore: |
+      *.jinja
