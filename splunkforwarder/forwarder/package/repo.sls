@@ -20,7 +20,7 @@ splunkforwarder:
     - name: /etc/init.d/splunkforwarder
     - source: salt://splunkforwarder/init.d/splunkforwarder.sh
     - template: jinja
-    - mode: 500
+    - mode: '0500'
   service.running:
     - name: splunkforwarder
     - enable: True

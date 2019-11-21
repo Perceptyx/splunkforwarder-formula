@@ -6,7 +6,7 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - user: splunk
@@ -15,7 +15,7 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 500
+    - mode: '0500'
     - makedirs: True
     - require:
       - file: /opt/splunkforwarder/etc

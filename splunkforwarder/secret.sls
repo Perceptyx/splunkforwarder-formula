@@ -6,14 +6,14 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 700
+    - mode: '0700'
     - makedirs: True
 
 /opt/splunkforwarder/etc/auth/splunk.secret:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 400
+    - mode: '0400'
     - contents_pillar: splunk:secret
     - require:
       - file: /opt/splunkforwarder/etc/auth

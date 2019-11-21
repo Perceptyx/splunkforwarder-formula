@@ -45,7 +45,7 @@ splunkforwarder:
     - name: /etc/init.d/splunkforwarder
     - source: salt://splunkforwarder/init.d/splunkforwarder.sh
     - template: jinja
-    - mode: 755
+    - mode: '0755'
     - require_in:
       - service: splunkforwarder
   {% else %}
@@ -53,7 +53,7 @@ splunkforwarder:
     - name: /etc/systemd/system/splunkforwarder.service
     - source: salt://splunkforwarder/init.d/splunkforwarder.service
     - template: jinja
-    - mode: 644
+    - mode: '0644'
     - require_in:
       - service: splunkforwarder
   {% endif %}

@@ -9,14 +9,14 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 /opt/splunkforwarder/etc/system/local:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 /opt/splunkforwarder/etc/apps/search/local/inputs.conf:
@@ -26,7 +26,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 644
+    - mode: '0644'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -45,7 +45,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -59,7 +59,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -74,7 +74,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
