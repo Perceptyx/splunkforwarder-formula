@@ -12,6 +12,20 @@ get-splunkforwarder-package:
     - source_hash: {{ splunkforwarder.source_hash }}
     - makedirs: True
 
+{%- if grains['os_family'] == 'Suse' %}
+get-gpg-signed-rpm-splunk:
+  file.managed:
+    - name: /tmp/splunk.pub
+    - source: https://docs.splunk.com/images/6/6b/SplunkPGPKey.pub
+    - source_hash: sha256=94a3e69d65858252bafba26eba8014d6ddd793bb6fdaf52b902188618b9d356b
+
+rpm-install-key-splunk:
+  cmd.run:
+    - name: rpm --import /tmp/splunk.pub
+    - require:
+      - file: /tmp/splunk.pub
+{%- endif %}
+
 {%- if grains['os_family'] == 'Debian' %}
 is-splunkforwarder-package-outdated:
   cmd.run:
@@ -35,6 +49,9 @@ splunkforwarder:
     - require:
       - user: splunk_user
       - file: get-splunkforwarder-package
+  {%- if grains['os_family'] == 'Suse' %}
+      - rpm-install-key-splunk
+  {% endif %}
     - require_in:
       - service: splunkforwarder
     - force: True
