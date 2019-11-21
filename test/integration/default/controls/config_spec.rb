@@ -15,13 +15,15 @@ control 'splunkforwarder configuration' do
   end
 
   describe ini('/opt/splunkforwarder/etc/system/local/outputs.conf') do
+    selfsigned_path = '/opt/splunkforwarder/etc/certs/selfsignedcert.pem'
+    cacert_path = '/opt/splunkforwarder/etc/certs/cacert.pem'
+
     its('tcpout.useACK') { should eq 'true' }
     its('tcpout.defaultGroup') { should eq 'splunkssl' }
     its('tcpout:splunkssl.compressed') { should eq 'true' }
     its('tcpout:splunkssl.server') { should eq '1.2.3.4:9998,1.2.4.5:9998' }
-    its('tcpout:splunkssl.sslCertPath') { should eq '/opt/splunkforwarder/etc/certs/selfsignedcert.pem' }
-    its('tcpout:splunkssl.sslRootCAPath') { should eq '/opt/splunkforwarder/etc/certs/cacert.pem' }
+    its('tcpout:splunkssl.sslCertPath') { should eq selfsigned_path }
+    its('tcpout:splunkssl.sslRootCAPath') { should eq cacert_path }
     its('tcpout:splunkssl.sslVerifyServerCert') { should eq 'false' }
   end
-
 end
