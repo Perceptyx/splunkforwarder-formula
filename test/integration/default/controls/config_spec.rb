@@ -14,6 +14,13 @@ control 'splunkforwarder configuration' do
     its('httpServer.acceptFrom') { should eq '127.0.0.1' }
   end
 
+  describe port(9998) do
+    it { should be_listening }
+    its('processes') { should include 'splunkd' }
+    its('protocols') { should include 'tcp' }
+    its('addresses') { should include '0.0.0.0' }
+  end
+
   describe ini('/opt/splunkforwarder/etc/system/local/outputs.conf') do
     selfsigned_path = '/opt/splunkforwarder/etc/certs/selfsignedcert.pem'
     cacert_path = '/opt/splunkforwarder/etc/certs/cacert.pem'
