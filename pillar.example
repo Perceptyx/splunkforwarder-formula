@@ -38,6 +38,12 @@ splunkforwarder:
         index: search
         sourcetype: nginx_error_log
 
+  # It's recommended to limit to localhost connections in management port 8089
+  server:
+    httpServer:
+      acceptFrom: "127.0.0.1"
+
+
 splunk:
   secret: your shared splunk secret
   password:

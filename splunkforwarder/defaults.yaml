@@ -1,0 +1,6 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+splunkforwarder:
+  version: 8.0.0
+  version_hash: 1357bef0a7f6

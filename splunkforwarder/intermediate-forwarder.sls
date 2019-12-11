@@ -10,7 +10,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -25,7 +25,7 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 /opt/splunkforwarder/etc/apps/search/metadata/local.metadata:
@@ -35,7 +35,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - require:
       - pkg: splunkforwarder
       - file: /opt/splunkforwarder/etc/apps/search/metadata

@@ -145,6 +145,23 @@ index = search
 sourcetype = nginx_error_log
 ```
 
+### splunkforwarder:server (Dict)
+
+This is a dictionary containing configuration for the server. Each level below will be a config section:
+
+```yaml
+splunkforwarder:
+  server:
+    httpServer:
+      acceptFrom: "127.0.0.1"
+```
+
+Resulting Splunk server.conf Stanza:
+
+```text
+[httpServer]
+accepctFrom: "127.0.0.1"
+```
 
 ## Splunk Forwarder Optional Pillar Items
 
@@ -207,7 +224,7 @@ if you have one.  In that case you must configure
 cert you added here in lieu of selfsignedcert.pem.
 
 
-## Splunk Optional Pillar Items 
+## Splunk Optional Pillar Items
 
 ### splunk:self_cert_filename
 

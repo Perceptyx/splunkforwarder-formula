@@ -9,14 +9,14 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 /opt/splunkforwarder/etc/system/local:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
 
 /opt/splunkforwarder/etc/apps/search/local/inputs.conf:
@@ -26,7 +26,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 644
+    - mode: '0644'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -45,7 +45,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -59,7 +59,7 @@ include:
     - template: jinja
     - user: splunk
     - group: splunk
-    - mode: 600
+    - mode: '0600'
     - context:
       self_cert: {{ self_cert }}
     - require:
@@ -67,14 +67,18 @@ include:
       - file: /opt/splunkforwarder/etc/system/local
       - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
 
-{% if salt['pillar.get']('splunkforwarder:disable_management_port', False) %}
 /opt/splunkforwarder/etc/system/local/server.conf:
-  file.append:
-    - text: |
-
-        # - Disable Splunk Forwarder Management port (8089) - #
-        [httpServer]
-        disableDefaultPort = true
+  file.managed:
+    - name: /opt/splunkforwarder/etc/system/local/server.conf
+    - source: salt://splunkforwarder/etc-system-local/server.conf
+    - template: jinja
+    - user: splunk
+    - group: splunk
+    - mode: '0600'
+    - context:
+      self_cert: {{ self_cert }}
+    - require:
+      - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/system/local
     - onchanges_in:
       - service: splunkforwarder
-{% endif %}

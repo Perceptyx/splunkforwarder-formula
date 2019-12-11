@@ -6,7 +6,7 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 755
+    - mode: '0755'
     - makedirs: True
     - require:
       - user: splunk
@@ -15,12 +15,14 @@ include:
   file.directory:
     - user: splunk
     - group: splunk
-    - mode: 500
+    - mode: '0500'
     - makedirs: True
     - require:
       - file: /opt/splunkforwarder/etc
 
-{% for filename, config in salt['pillar.get']('splunk:certs', {}).iteritems() %}
+{% if salt['pillar.get']('splunk:certs') is mapping %}
+
+{% for filename, config in salt['pillar.get']('splunk:certs', {}).items() %}
 
 /opt/splunkforwarder/etc/certs/{{ filename }}:
   file.managed:
@@ -38,3 +40,4 @@ include:
 
 {% endfor %}
 
+{% endif %}
