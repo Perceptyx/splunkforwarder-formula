@@ -19,6 +19,13 @@ splunkforwarder:
         monitor: /var/log/nginx/error.log
         index: search
         sourcetype: nginx_error_log
+  props:
+    mysql_slow:
+      pulldown_type: 'true'
+      category: 'Database'
+      description: 'Mysql Slow Query Logs'
+      BREAK_ONLY_BEFORE: '^#\s*User@Host'
+
 
 splunk:
   secret: changeme

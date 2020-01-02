@@ -38,6 +38,13 @@ splunkforwarder:
         index: search
         sourcetype: nginx_error_log
 
+  props:
+    mysql_slow:
+      pulldown_type: 'true'
+      category: 'Database'
+      description: 'Mysql Slow Query Logs'
+      BREAK_ONLY_BEFORE: '^#\s*User@Host'
+
   # It's recommended to limit to localhost connections in management port 8089
   server:
     httpServer:

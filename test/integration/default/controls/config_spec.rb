@@ -21,6 +21,23 @@ control 'splunkforwarder configuration' do
     its('addresses') { should include '0.0.0.0' }
   end
 
+  describe ini('/opt/splunkforwarder/etc/apps/search/local/inputs.conf') do
+    its(['monitor:///var/log/nginx/access.log',
+         'index']) { should cmp 'search' }
+    its(['monitor:///var/log/nginx/access.log',
+         'sourcetype']) { should cmp 'nginx_access_log' }
+  end
+
+  # rubocop:disable Metrics/LineLength
+  describe parse_config_file('/opt/splunkforwarder/etc/apps/search/local/props.conf',
+                             standalone_comments: true) do
+    # rubocop:enable Metrics/LineLength
+    its('mysql_slow.pulldown_type') { should eq 'true' }
+    its('mysql_slow.category') { should cmp 'Database' }
+    its('mysql_slow.description') { should cmp 'Mysql Slow Query Logs' }
+    its('mysql_slow.BREAK_ONLY_BEFORE') { should cmp '^#\s*User@Host' }
+  end
+
   describe ini('/opt/splunkforwarder/etc/system/local/outputs.conf') do
     selfsigned_path = '/opt/splunkforwarder/etc/certs/selfsignedcert.pem'
     cacert_path = '/opt/splunkforwarder/etc/certs/cacert.pem'
