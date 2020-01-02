@@ -38,6 +38,25 @@ include:
     - watch_in:
       - service: splunkforwarder
 
+/opt/splunkforwarder/etc/apps/search/local/props.conf:
+  file.managed:
+    - name: /opt/splunkforwarder/etc/apps/search/local/props.conf
+    - source: salt://splunkforwarder/etc-apps-search/local/props.conf
+    - template: jinja
+    - user: splunk
+    - group: splunk
+    - mode: '0644'
+    - context:
+      self_cert: {{ self_cert }}
+    - require:
+      - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/apps/search/local
+      - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
+    - require_in:
+      - service: splunkforwarder
+    - watch_in:
+      - service: splunkforwarder
+
 /opt/splunkforwarder/etc/system/local/outputs.conf:
   file.managed:
     - name: /opt/splunkforwarder/etc/system/local/outputs.conf
