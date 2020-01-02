@@ -2,8 +2,11 @@
 # vim: ft=yaml
 ---
 ## Machine config
-dist: bionic
-sudo: required
+os: 'linux'
+arch: 'amd64'
+dist: 'bionic'
+version: '~> 1.0'
+
 services:
   - docker
 
@@ -13,7 +16,7 @@ cache: bundler
 
 ## Script to run for the test stage
 script:
-  - bundle exec kitchen verify "${INSTANCE}"
+  - bin/kitchen verify "${INSTANCE}"
 
 ## Stages and jobs matrix
 stages:
