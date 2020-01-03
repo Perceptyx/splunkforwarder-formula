@@ -171,7 +171,6 @@ verifier:
   # https://www.inspec.io/
   name: inspec
   sudo: true
-  sudo_command: sudo
   # cli, documentation, html, progress, json, json-min, json-rspec, junit
   reporter:
     - cli
