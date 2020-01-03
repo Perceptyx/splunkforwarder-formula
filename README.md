@@ -119,11 +119,11 @@ At least 1 server is required, presumably you can configure as many as you like.
 This is a dictionary containing all of the files you want to monitor.  The name of the dictionary
 is not used other than to guarantee uniqueness of each entry (a Salt constraint).
 
-There is 1 required entry in each, `monitor` which is used in Splunk's inputs.conf monitor stanza.
+There is 1 required entry in each, `monitor` which is used in Splunk's `inputs.conf` monitor stanza.
 Here again this should be unique and it can contain any characters that Splunk will accept as a
 monitoring stanza.
 
-Any additional entries are added directly to the [monitor] stanza in Splunk.
+Any additional entries are added directly to the `[monitor]` stanza in Splunk.
 
 Example:
 
@@ -137,17 +137,46 @@ splunkforwarder:
         sourcetype: nginx_error_log
 ```
 
-Resulting Splunk inputs.conf Stanza:
+Resulting Splunk `inputs.conf` stanza:
 
-```text
+```INI
 [monitor:///var/log/nginx/error.log]
 index = search
 sourcetype = nginx_error_log
 ```
 
+### splunkforwarder:props (Dict)
+
+This is a dictionary containing additional properties. Each sublevel will create a new section,
+and every property will be added to that section.
+
+Example:
+
+```yaml
+splunkforwarder:
+  props:
+    mysql_slow:
+      pulldown_type: 'true'
+      category: 'Database'
+      description: 'Mysql Slow Query Logs'
+      BREAK_ONLY_BEFORE: '^#\s*User@Host'
+
+```
+
+Resulting Splunk `props.conf` stanza:
+
+```INI
+[mysql_slow]
+pulldown_type = true
+category = Database
+description = Mysql Slow Query Logs
+BREAK_ONLY_BEFORE = ^#\s*User@Host
+```
+
+
 ### splunkforwarder:server (Dict)
 
-This is a dictionary containing configuration for the server. Each level below will be a config section:
+This is a dictionary containing configuration for the server. Each level below `server` will be a config section in the `server.conf` file:
 
 ```yaml
 splunkforwarder:
@@ -156,9 +185,9 @@ splunkforwarder:
       acceptFrom: "127.0.0.1"
 ```
 
-Resulting Splunk server.conf Stanza:
+Resulting Splunk `server.conf` stanza:
 
-```text
+```INI
 [httpServer]
 accepctFrom: "127.0.0.1"
 ```
