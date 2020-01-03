@@ -1,0 +1,9 @@
+name: splunkforwarder
+os: RedHat, Debian, Ubuntu, Suse, FreeBSD
+os_family: RedHat, Debian, Suse, FreeBSD
+version: 0.10.0
+release: 1
+minimum_version: 2017.7
+summary: Splunkforwarder formula
+description: Formula to configure Splunk forwarder and related resources
+top_level_dir: splunkforwarder
