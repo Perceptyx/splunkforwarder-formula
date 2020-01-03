@@ -158,9 +158,9 @@ splunkforwarder:
 
 Resulting Splunk server.conf Stanza:
 
-```text
+```INI
 [httpServer]
-accepctFrom: "127.0.0.1"
+acceptFrom = "127.0.0.1"
 ```
 
 ## Splunk Forwarder Optional Pillar Items
