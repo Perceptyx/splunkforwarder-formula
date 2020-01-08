@@ -27,6 +27,13 @@ splunkforwarder:
   forward_servers:
     - 1.2.3.4:9998
     - 1.2.4.5:9998
+  system:
+    inputs:
+      monitor:
+        mysql-slow:
+          monitor: /var/log/mysql/mysql-slow.log
+          index: database
+          sourcetype: mysql_slow
   inputs:
     monitor:
       nginx-access-log:
