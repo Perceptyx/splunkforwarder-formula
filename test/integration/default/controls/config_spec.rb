@@ -21,6 +21,13 @@ control 'splunkforwarder configuration' do
     its('addresses') { should include '0.0.0.0' }
   end
 
+  describe ini('/opt/splunkforwarder/etc/system/local/inputs.conf') do
+    its(['monitor:///var/log/mysql/mysql-slow.log',
+         'index']) { should cmp 'database' }
+    its(['monitor:///var/log/mysql/mysql-slow.log',
+         'sourcetype']) { should cmp 'mysql_slow' }
+  end
+
   describe ini('/opt/splunkforwarder/etc/apps/search/local/inputs.conf') do
     its(['monitor:///var/log/nginx/access.log',
          'index']) { should cmp 'search' }

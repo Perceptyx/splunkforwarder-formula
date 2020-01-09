@@ -123,6 +123,9 @@ There is 1 required entry in each, `monitor` which is used in Splunk's `inputs.c
 Here again this should be unique and it can contain any characters that Splunk will accept as a
 monitoring stanza.
 
+Monitors can be added also to the *system* local inputs.conf by using the same syntax but using
+the `splunkforwarder:system:inputs:monitor` dict.
+
 Any additional entries are added directly to the `[monitor]` stanza in Splunk.
 
 Example:
