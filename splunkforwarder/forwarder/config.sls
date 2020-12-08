@@ -57,10 +57,32 @@ include:
     - watch_in:
       - service: splunkforwarder
 
+/opt/splunkforwarder/etc/system/local/inputs.conf:
+  file.managed:
+    - name: /opt/splunkforwarder/etc/system/local/inputs.conf
+    - source: salt://splunkforwarder/etc-system-local/inputs.conf
+    - template: jinja
+    - user: splunk
+    - group: splunk
+    - mode: '0600'
+    - context:
+      self_cert: {{ self_cert }}
+    - require:
+      - pkg: splunkforwarder
+      - file: /opt/splunkforwarder/etc/certs/{{ self_cert }}
+    - require_in:
+      - service: splunkforwarder
+    - watch_in:
+      - service: splunkforwarder
+
 /opt/splunkforwarder/etc/system/local/outputs.conf:
   file.managed:
     - name: /opt/splunkforwarder/etc/system/local/outputs.conf
+{% if salt['pillar.get']('splunkforwarder:splunkcloud:enabled', False) %}
+    - contents:
+{% else %}
     - source: salt://splunkforwarder/etc-system-local/outputs.conf
+{% endif %}
     - template: jinja
     - user: splunk
     - group: splunk

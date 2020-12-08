@@ -194,3 +194,21 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/default
+  - name: splunkcloud
+    provisioner:
+      state_top:
+        base:
+          '*':
+            - splunkforwarder
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - splunkforwarder
+              - splunk
+      pillars_from_files:
+        splunkforwarder.sls: test/salt/pillar/splunkcloud.sls
+        splunk.sls: test/salt/pillar/splunkcloud.sls
+    verifier:
+      inspec_tests:
+        - path: test/integration/splunkcloud
