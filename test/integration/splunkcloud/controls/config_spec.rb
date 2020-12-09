@@ -45,16 +45,16 @@ control 'splunkforwarder configuration' do
     its('mysql_slow.BREAK_ONLY_BEFORE') { should cmp '^#\s*User@Host' }
   end
 
-  describe ini('/opt/splunkforwarder/etc/system/local/outputs.conf') do
-    selfsigned_path = '/opt/splunkforwarder/etc/certs/selfsignedcert.pem'
-    cacert_path = '/opt/splunkforwarder/etc/certs/cacert.pem'
+  describe ini('/opt/splunkforwarder/etc/apps/100_testme_splunkcloud/default/outputs.conf') do
+    cacert_path = 'etc/apps/100_testme_splunkcloud/default/testme_cacert.pem'
+    cert_path = 'etc/apps/100_testme_splunkcloud/default/testme_server.pem'
 
-    its('tcpout.useACK') { should eq 'true' }
-    its('tcpout.defaultGroup') { should eq 'splunkssl' }
-    its('tcpout:splunkssl.compressed') { should eq 'true' }
-    its('tcpout:splunkssl.server') { should eq '1.2.3.4:9998,1.2.4.5:9998' }
-    its('tcpout:splunkssl.sslCertPath') { should eq selfsigned_path }
-    its('tcpout:splunkssl.sslRootCAPath') { should eq cacert_path }
-    its('tcpout:splunkssl.sslVerifyServerCert') { should eq 'false' }
+    its('tcpout.defaultGroup') { should cmp 'splunkcloud' }
+    its('tcpout:splunkcloud.compressed') { should cmp 'false' }
+    its('tcpout:splunkcloud.server') { should include 'inputs1.testme.splunkcloud.com:9997' }
+    its('tcpout:splunkcloud.sslCommonNameToCheck') { should cmp '*.testme.splunkcloud.com' }
+    its('tcpout:splunkcloud.sslCertPath') { should include cert_path }
+    its('tcpout:splunkcloud.sslRootCAPath') { should include cacert_path }
+    its('tcpout:splunkcloud.sslVerifyServerCert') { should cmp 'true' }
   end
 end

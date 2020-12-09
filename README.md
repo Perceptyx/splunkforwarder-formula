@@ -112,7 +112,75 @@ splunkforwarder:
     - 1.2.4.5:9998
 ```
 
+*NOTE*: Mutually exclusive with `splunkcloud`
+
 At least 1 server is required, presumably you can configure as many as you like.
+
+## SplunkCloud
+
+If you want to use splunkcloud as the destinatio host, there is a whole dict for configuring similar to what you'll get from the `.spl` package from your splunkcloud instance.
+
+### splunkforwarder:splunkcloud (Dict)
+
+This is the dict used for configuring splunkcloud.
+
+### splunkforwarder:splunkcloud:enabled (Bool)
+
+Set to `True` to enable splunkcloud.
+
+### splunkforwarder:splunkcloud:instance (str)
+
+Your instance name.
+
+Example:
+```yaml
+splunkforwarder:
+  splunkcloud:
+    instance: myinstance
+```
+
+### splunkforwarder:splunkcloud:config (Dict)
+
+This is where we hold the configuration for the instance. Required items are the certificates, the `sslPassword`, and servers.
+Keys are: first, the directory where to store the config, then the filename. Lastly, the contents. If you want to store certificates, just use the `contents` as you normally do.
+If you want to add the configuration as ini file, first key is the section name, and afterwards just add the list with key/value pairs representing the content in that section.
+
+Example:
+```yaml
+splunkforwarder:
+  splunkcloud:
+    config:
+      local:
+        outputs.conf:
+          "tcpout:splunkcloud":
+            # this is the password that would decrypt the private key in the certificate
+            sslPassword: somereallygreatpassword
+      default:
+        limits.conf:
+          thruput:
+            maxKBps: 256
+        outputs.conf:
+          tcpout:
+            defaultGroup: splunkcloud
+          "tcpout:splunkcloud":
+            server:
+              - inputs1.testme.splunkcloud.com:9997
+              - inputs2.testme.splunkcloud.com:9997
+            compressed: '"false"'
+            sslCertPath: '"$SPLUNK_HOME/etc/apps/100_testme_splunkcloud/default/testme_server.pem"'
+            sslRootCAPath: '"$SPLUNK_HOME/etc/apps/100_testme_splunkcloud/default/testme_cacert.pem"'
+            sslCommonNameToCheck: "*.testme.splunkcloud.com"
+            sslVerifyServerCert: '"true"'
+            useClientSSLCompression: '"true"'
+        testme_cacert.pem:
+          contents: |
+            -----BEGIN CERTIFICATE-----
+            ...
+        testme_server.pem:
+          contents: |
+            -----BEGIN CERTIFICATE-----
+            ...
+```
 
 ### splunkforwarder:inputs:monitor (Dict)
 
