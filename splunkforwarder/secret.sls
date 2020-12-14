@@ -2,6 +2,8 @@
 include:
   - splunkforwarder.forwarder
 
+{% if salt['pillar.get']('splunk:secret', False) %}
+
 /opt/splunkforwarder/etc/auth:
   file.directory:
     - user: splunk
@@ -10,7 +12,7 @@ include:
     - makedirs: True
 
 /opt/splunkforwarder/etc/auth/splunk.secret:
-  file.directory:
+  file.managed:
     - user: splunk
     - group: splunk
     - mode: '0400'
@@ -21,3 +23,5 @@ include:
       - service: splunkforwarder
     - watch_in:
       - service: splunkforwarder
+
+{% endif %}
